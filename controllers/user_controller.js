@@ -45,10 +45,13 @@ module.exports.createSession = function(req, res){
 
 // destroying session
 module.exports.destroySession = function(req, res) {
-    req.logout();
-    console.log('Logged Out');
-    return res.redirect('/users/login');
-}
+    req.logout(() => {}); // Providing an empty function as a callback
+    req.session.destroy(() => {
+        console.log('Logged Out');
+        res.redirect('/users/login');
+    });
+};
+
 
 // go to login page
 module.exports.login = function(req, res){
